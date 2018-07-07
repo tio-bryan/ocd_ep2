@@ -1,3 +1,8 @@
+// Nome: Andre Fillipe Cavicchiolli 9878002
+// Nome: Bryan Munekata 99111444
+// Nome: Rodrigo Rossi dos Santos 9844828
+// Nome: Tiago de Luna Farias 9875503
+
 import java.io.*;
 import java.util.List;
 import java.util.LinkedList;
