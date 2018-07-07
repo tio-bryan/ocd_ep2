@@ -240,23 +240,23 @@ public class ocd_ep2 {
         if (flags[5] == 1) {
             ocd_ep2.ax = A - B;
             if (ocd_ep2.ax == 0) ocd_ep2.ZF = 1; // flag de soma 0
-            if (B > A) ocd_ep2.SF = 1
+            if (B > A) ocd_ep2.SF = 1;
             
         }
         if (flags[7] == 1) {
             ocd_ep2.bx = A - B;
             if (ocd_ep2.bx == 0) ocd_ep2.ZF = 1; // flag de soma 0
-            if (B > A) ocd_ep2.SF = 1
+            if (B > A) ocd_ep2.SF = 1;
         }
         if (flags[9] == 1) {
             ocd_ep2.cx = A - B;
             if (ocd_ep2.cx == 0) ocd_ep2.ZF = 1; // flag de soma 0
-            if (B > A) ocd_ep2.SF = 1
+            if (B > A) ocd_ep2.SF = 1;
         }
         if (flags[11] == 1) {
             ocd_ep2.dx = A - B;
             if (ocd_ep2.dx == 0) ocd_ep2.ZF = 1; // flag de soma 0
-            if (B > A) ocd_ep2.SF = 1
+            if (B > A) ocd_ep2.SF = 1;
         }
     }
 
