@@ -200,7 +200,7 @@ public class ocd_ep2 {
                     }
                 }
             }
-            System.out.println(instrucao_bin);
+
             M objeto = new M(enderecoMEM, instrucao_bin);
             fila.add(objeto);
             enderecoMEM++;
@@ -339,8 +339,10 @@ public class ocd_ep2 {
         String b = code.substring(9,16);
         int reg1 = 0;
         int reg2 = 0;
-
-        System.out.println("IR: " + ocd_ep2.PC - 1);
+        
+        System.out.println("--------------------------------------------------");
+        System.out.println("Binario: " + code);
+        estado();
 
         switch (a) {
             case "0001":
@@ -459,17 +461,17 @@ public class ocd_ep2 {
             if (elemento.endereco == ocd_ep2.PC) {
                 ocd_ep2.PC++;
                 leCodigo(elemento.opCode, flags, lista) ;
-                estado();
+               
             }
 
         }
         
     }
     static void estado() { // Printa os registradores apos ciclo
-        System.out.println("Registradores: " + "ax= " ax + " " +"bx= " bx + " " +"cx= " cx + " "+"dx= " dx);
-        System.out.println("------------------------------------------------------------------------");
-        System.out.println("Flags: " + "ZF= " + ZF + " " + "OF= " + OF + "SF= " + SF );
-
+        System.out.println("IR: " + (ocd_ep2.PC - 1));
+        System.out.println("Registradores: ax = " + ax + " bx = " + bx + " cx= " + cx + " dx= " + dx);
+        System.out.println("Flags: " + " ZF = " + ZF + " " + " OF = " + OF + " SF = " + SF );
+        System.out.println("--------------------------------------------------\n");
     }
 
 
