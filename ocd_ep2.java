@@ -209,11 +209,11 @@ public class ocd_ep2 {
         }
     }
     
-    static void mov (int A, int B, flags){
-         A = B;                                                               
+    static void mov(int A, int B, int[] flags) {
+        A = B;                                                               
     }
 
-    static void inc (int A, int[] flags) {
+    static void inc(int A, int[] flags) {
         add(A, 1, flags);
     }
     
