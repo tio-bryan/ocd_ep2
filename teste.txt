@@ -1,1 +1,2 @@
 ADD AX,10
+SUB AX,5
