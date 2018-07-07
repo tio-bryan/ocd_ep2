@@ -391,10 +391,10 @@ public class ocd_ep2 {
                 break;
         }
 
-        busca(fila, ocd_ep2.PC, flags);
+        busca(fila, flags);
     }
 
-    static void busca(List<M> lista, int PC, int[] flags) {
+    static void busca(List<M> lista,int[] flags) {
 
         // Iterator it = lista.iterator();
 
@@ -413,6 +413,7 @@ public class ocd_ep2 {
                 ocd_ep2.PC++;
                 leCodigo(elemento.opCode, flags, lista) ;
             }
+
         }
         
     }
@@ -429,7 +430,7 @@ public class ocd_ep2 {
         if (args[0] != null) compilaCode(new FileReader(args[0]), fila);
 
         //leCodigo(busca(fila, ocd_ep2.PC, flags), flags, fila);
-        busca(fila, ocd_ep2.PC, flags);
+        busca(fila, flags);
 
     }
 }

@@ -1,2 +1,3 @@
 ADD AX,10
 SUB AX,5
+JE 0
