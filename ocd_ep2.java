@@ -346,7 +346,7 @@ public class ocd_ep2 {
         int reg2 = 0;
         
         System.out.println("--------------------------------------------------");
-        System.out.println("Binario: " + code);
+        System.out.println(code);
         estado();
 
         switch (a) {
