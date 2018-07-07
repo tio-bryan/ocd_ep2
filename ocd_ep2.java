@@ -388,9 +388,7 @@ public class ocd_ep2 {
     static void registradores() { // Printa os registradores apos ciclo
 
     }
-    void verificaFlag(int [] flags){
-        
-    }
+
 
     public static void main(String[] args) throws IOException {
         List<M> fila = new LinkedList<M>(); // lista ligada com o binario e endereco
