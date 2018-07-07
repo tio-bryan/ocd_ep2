@@ -3,7 +3,8 @@ import java.util.List;
 import java.util.LinkedList;
 
 public class ocd_ep2 {
-    static int ax, bx, cx, dx, PC, ZERO;
+    static int ax, bx, cx, dx; // registradores
+    static int PC, ZF, OF, SF; // flags
 
     // Baseado no http://www.guj.com.br/t/transforma-decimal-em-binario/47061
     public static String DecimalParaBinario(int c2, int length) {
@@ -207,6 +208,10 @@ public class ocd_ep2 {
             enderecoMEM++;
         }
     }
+    
+    static void mov (int A, int B, flags){
+         A = B;                                                               
+    }
 
     static void inc (int A, int[] flags) {
         add(A, 1, flags);
@@ -215,35 +220,43 @@ public class ocd_ep2 {
     static void add(int A, int B, int[] flags) {
         if (flags[5] == 1) {
             ocd_ep2.ax = A + B;
+            if (A > B) ocd_ep2.OF = 1;
         }
         if (flags[7] == 1) {
             ocd_ep2.bx = A + B;
+            if (A > B) ocd_ep2.OF = 1;
         }
         if (flags[9] == 1) {
             ocd_ep2.cx = A + B;
+            if (A > B) ocd_ep2.OF = 1;
         }
         if (flags[11] == 1) {
             ocd_ep2.dx = A + B;
+            if (A > B) ocd_ep2.OF = 1;
         }
     }
 
     static void sub(int A, int B, int[] flags) {
         if (flags[5] == 1) {
             ocd_ep2.ax = A - B;
-            if (ocd_ep2.ax == 0) ocd_ep2.ZERO = 1; // flag de soma 0
+            if (ocd_ep2.ax == 0) ocd_ep2.ZF = 1; // flag de soma 0
+            if (B > A) ocd_ep2.SF = 1
             
         }
         if (flags[7] == 1) {
             ocd_ep2.bx = A - B;
-            if (ocd_ep2.bx == 0) ocd_ep2.ZERO = 1; // flag de soma 0
+            if (ocd_ep2.bx == 0) ocd_ep2.ZF = 1; // flag de soma 0
+            if (B > A) ocd_ep2.SF = 1
         }
         if (flags[9] == 1) {
             ocd_ep2.cx = A - B;
-            if (ocd_ep2.cx == 0) ocd_ep2.ZERO = 1; // flag de soma 0
+            if (ocd_ep2.cx == 0) ocd_ep2.ZF = 1; // flag de soma 0
+            if (B > A) ocd_ep2.SF = 1
         }
         if (flags[11] == 1) {
             ocd_ep2.dx = A - B;
-            if (ocd_ep2.dx == 0) ocd_ep2.ZERO = 1; // flag de soma 0
+            if (ocd_ep2.dx == 0) ocd_ep2.ZF = 1; // flag de soma 0
+            if (B > A) ocd_ep2.SF = 1
         }
     }
 
@@ -282,11 +295,44 @@ public class ocd_ep2 {
     }
 
     static void je(int A) {
-        if (ocd_ep2.ZERO == 1) {
+        if (ocd_ep2.ZF == 1) {
             ocd_ep2.PC = A; // altera linha de PC para o jump
-            ocd_ep2.ZERO = 0;
+            ocd_ep2.ZF = 0; // restaura flag ao normal
         }
-        
+    }
+
+    static void jne(int A) {
+        if (ocd_ep2.ZF == 0) {
+            ocd_ep2.PC = A; // altera linha de PC para o jump
+            ocd_ep2.ZF = 0; // restaura flag ao normal
+        }
+    }
+    
+    static void jg (int A){
+        if (ocd_ep2.OF == 1) {
+            ocd_ep2.PC = A;
+            ocd_ep2.OF = 0; // restaura flag ao normal
+        }
+    }
+    static void jge (int A){
+        if (ocd_ep2.OF == 1 && ocd_ep2.ZF == 0) { // SF = OF
+            ocd_ep2.PC = A;
+            ocd_ep2.OF = 0; // restaura flag ao normal
+            ocd_ep2.ZF = 0; // restaura flag ao normal
+        }
+    }
+    static void jl (int A){
+        if (ocd_ep2.SF == 1) {
+            ocd_ep2.PC = A;
+            ocd_ep2.SF = 0; // restaura flag ao normal
+        }
+    }
+    static void jle (int A) {
+        if (ocd_ep2.SF == 1 && ocd_ep2.ZF == 0) {
+            ocd_ep2.PC = A;
+            ocd_ep2.SF = 0; // restaura flag ao normal
+            ocd_ep2.ZF = 0; // restaura flag ao normal
+        }
     }
 
     static void leCodigo(String code, int[] flags, List<M> fila) {
@@ -366,7 +412,7 @@ public class ocd_ep2 {
 
         switch (instru) {
             case "0001":
-                // mov();
+                mov(reg1, reg2, flags);
                 break;            
             case "0010":
                 inc(reg1, flags);
@@ -390,19 +436,19 @@ public class ocd_ep2 {
                 je(reg1);
                 break;
             case "1001":
-                //jne(reg1);
+                jne(reg1);
                 break;
             case "1010":
-                // jg(reg1);
+                jg(reg1); 
                 break;
             case "1011":
-                // jge(reg1);
+                jge(reg1);
                 break;
             case "1100":
-                // jl(reg1);
+                jl(reg1);
                 break;
             case "1101":
-                // jle(reg1);
+                jle(reg1);
                 break;
         }
 
