@@ -1,7 +1,6 @@
 import java.io.*;
 import java.util.List;
 import java.util.LinkedList;
-import java.util.Iterator;
 
 public class ocd_ep2 {
     static int AX, BX, CX, DX, PC;
@@ -32,7 +31,7 @@ public class ocd_ep2 {
     }
 
     public static int BinarioParaDecimal(int binario) {
-        
+        // System.out.println(binario);
         String myString = new StringBuilder(Integer.toString(binario)).reverse().toString();
         int result = 0;
 
@@ -171,8 +170,8 @@ public class ocd_ep2 {
             } else {
                 c1 = parts[1];
                 try {
-                    length = 12;
-                    instrucao_bin += DecimalParaBinario(Integer.parseInt(c1), length); // caso o resto da instrucao seja um int
+                    length = 8;
+                    instrucao_bin += "0000" + DecimalParaBinario(Integer.parseInt(c1), length); // caso o resto da instrucao seja um int
                 } catch (Exception e) { // caso seja um registrador
                     switch (c1) {
                         case "AX":
@@ -278,16 +277,20 @@ public class ocd_ep2 {
     }
 
     static void je(int A) {
-        ocd_ep2.PC = A; // altera linha de PC para o jump
+        if(){
+            ocd_ep2.PC = A; // altera linha de PC para o jump
+        }
+        
     }
 
     static void leCodigo(String code, int[] flags, List<M> fila) {
-        System.out.println(code + " --- " + code.length());
-        String instru = code.substring(0,3);
-        String a = code.substring(4,7);
-        String b = code.substring(9,15);
+        String instru = code.substring(0,4);
+        String a = code.substring(4,8);
+        String b = code.substring(9,16);
         int reg1 = 0;
         int reg2 = 0;
+
+        System.out.println(ocd_ep2.PC);
 
         switch (a) {
             case "0001":
