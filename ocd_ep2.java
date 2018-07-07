@@ -362,16 +362,16 @@ public class ocd_ep2 {
                 flags[11] = 1;
                 break;
             case "0101":
-                //instrucao_bin += "0101";
+                reg1 = ocd_ep2.ax;
                 break;
             case "0110":
-                //instrucao_bin += "0110";
+                reg1 = ocd_ep2.bx;
                 break;
             case "0111":
-                //instrucao_bin += "0111";
+                reg1 = ocd_ep2.cx;
                 break;
             case "1000":
-                //instrucao_bin += "1000";
+                reg1 = ocd_ep2.dx;
                 break;
         }
 
@@ -396,16 +396,16 @@ public class ocd_ep2 {
                     flags[12] = 1;
                     break;
                 case "0101":
-                    //instrucao_bin += "0101";
+                    reg2 = ocd_ep2.ax;
                     break;
                 case "0110":
-                    //instrucao_bin += "0110";
+                    reg2 = ocd_ep2.bx;
                     break;
                 case "0111":
-                    //instrucao_bin += "0111";
+                    reg2 = ocd_ep2.cx;
                     break;
                 case "1000":
-                    //instrucao_bin += "1000";
+                    reg2 = ocd_ep2.dx;
                     break;
             }
         }                    
