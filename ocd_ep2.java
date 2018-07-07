@@ -205,27 +205,76 @@ public class ocd_ep2 {
             enderecoMEM++;
         }
     }
-static void inc ()n int A{}
-        add(A, 1);
+
+    static void inc (int A, int[] flags) {
+        add(A, 1, flags);
+    }
     
-    static void add(int A, int B) {
-        ocd_ep2.AX = A + B;
-    }
-    static void sub(int A, int B){
-        ocd_ep2.AX = A - B; 
-    }
-    static void mul(int A, int B){
-        ocd_ep2.AX = A * B; 
-    }
-    static void div(int A, int B){
-        ocd_ep2.AX = A/B; 
-    }
-    static void cmp(int A, int B){
-        sub(A,B); //verifica conta passada if==0 entao eh igual
+    static void add(int A, int B, int[] flags) {
+        if (flags[5] == 1) {
+            ocd_ep2.AX = A + B;
+        }
+        if (flags[7] == 1) {
+            ocd_ep2.BX = A + B;
+        }
+        if (flags[9] == 1) {
+            ocd_ep2.CX = A + B;
+        }
+        if (flags[11] == 1) {
+            ocd_ep2.DX = A + B;
+        }
     }
 
+    static void sub(int A, int B, int[] flags) {
+        if (flags[5] == 1) {
+            ocd_ep2.AX = A - B;
+        }
+        if (flags[7] == 1) {
+            ocd_ep2.BX = A - B;
+        }
+        if (flags[9] == 1) {
+            ocd_ep2.CX = A - B;
+        }
+        if (flags[11] == 1) {
+            ocd_ep2.DX = A - B;
+        }
+    }
 
-    static void leCodigo(String code, int [] flags) {
+    static void mul(int A, int B, int[] flags) {
+        if (flags[5] == 1) {
+            ocd_ep2.AX = A * B;
+        }
+        if (flags[7] == 1) {
+            ocd_ep2.BX = A * B;
+        }
+        if (flags[9] == 1) {
+            ocd_ep2.CX = A * B;
+        }
+        if (flags[11] == 1) {
+            ocd_ep2.DX = A * B;
+        }
+    }
+
+    static void div(int A, int B, int[] flags) {
+        if (flags[5] == 1) {
+            ocd_ep2.AX = A / B;
+        }
+        if (flags[7] == 1) {
+            ocd_ep2.BX = A / B;
+        }
+        if (flags[9] == 1) {
+            ocd_ep2.CX = A / B;
+        }
+        if (flags[11] == 1) {
+            ocd_ep2.DX = A / B;
+        }
+    }
+
+    static void cmp(int A, int B, int[] flags) {
+        sub(A, B, flags); //verifica conta passada if==0 entao eh igual
+    }
+
+    static void leCodigo(String code, int[] flags) {
         
         String instru = code.substring(0,3);
         String a = code.substring(4,7);
@@ -268,53 +317,52 @@ static void inc ()n int A{}
             reg2 = BinarioParaDecimal(Integer.parseInt(b));
         } else {
             switch (b) {
-            case "0001":
-                reg2 = ocd_ep2.AX;
-                flags[6] = 1;  //porta de saida do reg do diagrama - 1
-                break;
-            case "0010":
-                reg2 = ocd_ep2.BX;
-                flags[8] = 1;
-                break;
-            case "0011":
-                reg2 = ocd_ep2.CX;
-                flags[10] = 1;
-                break;
-            case "0100":
-                reg2 = ocd_ep2.DX; 
-                flags[12] = 1;
-                break;
-            case "0101":
-                //instrucao_bin += "0101";
-                break;
-            case "0110":
-                //instrucao_bin += "0110";
-                break;
-            case "0111":
-                //instrucao_bin += "0111";
-                break;
-            case "1000":
-                //instrucao_bin += "1000";
-                break;
-        }
+                case "0001":
+                    reg2 = ocd_ep2.AX;
+                    flags[6] = 1;  //porta de saida do reg do diagrama - 1
+                    break;
+                case "0010":
+                    reg2 = ocd_ep2.BX;
+                    flags[8] = 1;
+                    break;
+                case "0011":
+                    reg2 = ocd_ep2.CX;
+                    flags[10] = 1;
+                    break;
+                case "0100":
+                    reg2 = ocd_ep2.DX; 
+                    flags[12] = 1;
+                    break;
+                case "0101":
+                    //instrucao_bin += "0101";
+                    break;
+                case "0110":
+                    //instrucao_bin += "0110";
+                    break;
+                case "0111":
+                    //instrucao_bin += "0111";
+                    break;
+                case "1000":
+                    //instrucao_bin += "1000";
+                    break;
+            }
         }                    
 
-    
         switch (instru) {
             case "0001":
             case "0010":
-                inc(reg1);
+                inc(reg1, flags);
             case "0011":
-                add(reg1, reg2);
+                add(reg1, reg2, flags);
                 break;
             case "0100":
-                sub(reg1, reg2);
+                sub(reg1, reg2, flags);
             case "0101":
-                mul(reg1, reg2);
+                mul(reg1, reg2, flags);
             case "0110":
-                div(reg1, reg2);
+                div(reg1, reg2, flags);
             case "0111":
-                cmp(reg1, reg2);
+                cmp(reg1, reg2, flags);
             case "1000":
             case "1001":
             case "1010":
@@ -356,6 +404,3 @@ static void inc ()n int A{}
 
     }
 }
-
-
-
