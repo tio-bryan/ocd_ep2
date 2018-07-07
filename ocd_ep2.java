@@ -350,6 +350,7 @@ static void inc ()n int A{}
 
         if (args[0] != null) {
             compilaCode(new FileReader(args[0]), fila);
+            // hurr durr
         }
 
         leCodigo(busca(fila, 0), flags);
