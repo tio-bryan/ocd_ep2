@@ -54,9 +54,7 @@ public class ocd_ep2 {
         String c2 = "";
 
         String instrucao_bin = "";
-        // String c1_bin = "000000";
-        // String c2_bin = "000000";
-
+        
         while ((line = leitor.readLine()) != null) {
             String[] parts = line.split(" ");
             instrucao = parts[0];
@@ -208,15 +206,15 @@ public class ocd_ep2 {
             enderecoMEM++;
         }
     }
-    
+
     static void mov(int A, int B, int[] flags) {
-        A = B;                                                               
+        A = B;
     }
 
     static void inc(int A, int[] flags) {
         add(A, 1, flags);
     }
-    
+
     static void add(int A, int B, int[] flags) {
         if (flags[5] == 1) {
             ocd_ep2.ax = A + B;
@@ -342,7 +340,7 @@ public class ocd_ep2 {
         int reg1 = 0;
         int reg2 = 0;
 
-        System.out.println(ocd_ep2.PC);
+        System.out.println("IR: " + ocd_ep2.PC - 1);
 
         switch (a) {
             case "0001":
@@ -457,28 +455,20 @@ public class ocd_ep2 {
 
     static void busca(List<M> lista,int[] flags) {
 
-        // Iterator it = lista.iterator();
-
-        // while (it.hasNext()) {
-        //     M MAR = lista.get(ocd_ep2.PC);
-        //     if (MAR.endereco == ocd_ep2.PC) {
-        //         ocd_ep2.PC++;
-        //         leCodigo(MAR.opCode, flags, lista) ;
-        //     }
-        // }
-
-        // M MAR = lista.get(ocd_ep2.PC);
-
         for (M elemento : lista) {
             if (elemento.endereco == ocd_ep2.PC) {
                 ocd_ep2.PC++;
                 leCodigo(elemento.opCode, flags, lista) ;
+                estado();
             }
 
         }
         
     }
-    static void registradores() { // Printa os registradores apos ciclo
+    static void estado() { // Printa os registradores apos ciclo
+        System.out.println("Registradores: " + "ax= " ax + " " +"bx= " bx + " " +"cx= " cx + " "+"dx= " dx);
+        System.out.println("------------------------------------------------------------------------");
+        System.out.println("Flags: " + "ZF= " + ZF + " " + "OF= " + OF + "SF= " + SF );
 
     }
 
