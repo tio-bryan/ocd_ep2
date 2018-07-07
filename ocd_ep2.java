@@ -315,7 +315,7 @@ public class ocd_ep2 {
         }
     }
     static void jge (int A){
-        if (ocd_ep2.OF == 1 && ocd_ep2.ZF == 0) { // SF = OF
+        if (ocd_ep2.OF == 1 && ocd_ep2.ZF == 0) {
             ocd_ep2.PC = A;
             ocd_ep2.OF = 0; // restaura flag ao normal
             ocd_ep2.ZF = 0; // restaura flag ao normal
