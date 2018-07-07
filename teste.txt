@@ -1,2 +1,3 @@
-ADD AX,10
-SUB AX,5
+add ax,10
+sub ax,5
+je 0

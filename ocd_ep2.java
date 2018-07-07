@@ -3,7 +3,7 @@ import java.util.List;
 import java.util.LinkedList;
 
 public class ocd_ep2 {
-    static int AX, BX, CX, DX, PC;
+    static int ax, bx, cx, dx, PC, ZERO;
 
     // Baseado no http://www.guj.com.br/t/transforma-decimal-em-binario/47061
     public static String DecimalParaBinario(int c2, int length) {
@@ -61,43 +61,43 @@ public class ocd_ep2 {
             instrucao = parts[0];
 
             switch (instrucao) {
-                case "MOV":
+                case "mov":
                     instrucao_bin = "0001";
                     break;
-                case "INC":
+                case "inc":
                     instrucao_bin = "0010";
                     break;
-                case "ADD":
+                case "add":
                     instrucao_bin = "0011";
                     break;
-                case "SUB":
+                case "sub":
                     instrucao_bin = "0100";
                     break;
-                case "MUL":
+                case "mul":
                     instrucao_bin = "0101";
                     break;
-                case "DIV":
+                case "div":
                     instrucao_bin = "0110";
                     break;
-                case "CMP":
+                case "cmp":
                     instrucao_bin = "0111";
                     break;
-                case "JE":
+                case "je":
                     instrucao_bin = "1000";
                     break;
-                case "JNE":
+                case "jne":
                     instrucao_bin = "1001";
                     break;
-                case "JG":
+                case "jg":
                     instrucao_bin = "1010";
                     break;
-                case "JGE":
+                case "jge":
                     instrucao_bin = "1011";
                     break;
-                case "JL":
+                case "jl":
                     instrucao_bin = "1100";
                     break;
-                case "JLE":
+                case "jle":
                     instrucao_bin = "1101";
                     break;
             }
@@ -108,28 +108,28 @@ public class ocd_ep2 {
                 c2 = c[1];
 
                 switch (c1) {
-                    case "AX":
+                    case "ax":
                         instrucao_bin += "0001";
                         break;
-                    case "BX":
+                    case "bx":
                         instrucao_bin += "0010";
                         break;
-                    case "CX":
+                    case "cx":
                         instrucao_bin += "0011";
                         break;
-                    case "DX":
+                    case "dx":
                         instrucao_bin += "0100";
                         break;
-                    case "[AX]":
+                    case "[ax]":
                         instrucao_bin += "0101";
                         break;
-                    case "[BX]":
+                    case "[bx]":
                         instrucao_bin += "0110";
                         break;
-                    case "[CX]":
+                    case "[cx]":
                         instrucao_bin += "0111";
                         break;
-                    case "[DX]":
+                    case "[dx]":
                         instrucao_bin += "1000";
                         break;
                 }
@@ -140,28 +140,28 @@ public class ocd_ep2 {
                 }
                 catch (Exception e) { // caso seja um registrador
                     switch (c2) {
-                        case "AX":
+                        case "axax":
                             instrucao_bin += "00000001";
                             break;
-                        case "BX":
+                        case "bx":
                             instrucao_bin += "00000010";
                             break;
-                        case "CX":
+                        case "cx":
                             instrucao_bin += "00000011";
                             break;
-                        case "DX":
+                        case "dx":
                             instrucao_bin += "00000100";
                             break;
-                        case "[AX]":
+                        case "[ax]":
                             instrucao_bin += "00000101";
                             break;
-                        case "[BX]":
+                        case "[bx]":
                             instrucao_bin += "00000110";
                             break;
-                        case "[CX]":
+                        case "[cx]":
                             instrucao_bin += "00000111";
                             break;
-                        case "[DX]":
+                        case "[dx]":
                             instrucao_bin += "00001000";
                             break;
                     }
@@ -174,28 +174,28 @@ public class ocd_ep2 {
                     instrucao_bin += "0000" + DecimalParaBinario(Integer.parseInt(c1), length); // caso o resto da instrucao seja um int
                 } catch (Exception e) { // caso seja um registrador
                     switch (c1) {
-                        case "AX":
+                        case "ax":
                             instrucao_bin += "000000000001";
                             break;
-                        case "BX":
+                        case "bx":
                             instrucao_bin += "000000000010";
                             break;
-                        case "CX":
+                        case "cx":
                             instrucao_bin += "000000000011";
                             break;
-                        case "DX":
+                        case "dx":
                             instrucao_bin += "000000000100";
                             break;
-                        case "[AX]":
+                        case "[ax]":
                             instrucao_bin += "000000000101";
                             break;
-                        case "[BX]":
+                        case "[bx]":
                             instrucao_bin += "000000000110";
                             break;
-                        case "[CX]":
+                        case "[cx]":
                             instrucao_bin += "000000000111";
                             break;
-                        case "[DX]":
+                        case "[dx]":
                             instrucao_bin += "000000001000";
                             break;
                     }
@@ -214,71 +214,77 @@ public class ocd_ep2 {
     
     static void add(int A, int B, int[] flags) {
         if (flags[5] == 1) {
-            ocd_ep2.AX = A + B;
+            ocd_ep2.ax = A + B;
         }
         if (flags[7] == 1) {
-            ocd_ep2.BX = A + B;
+            ocd_ep2.bx = A + B;
         }
         if (flags[9] == 1) {
-            ocd_ep2.CX = A + B;
+            ocd_ep2.cx = A + B;
         }
         if (flags[11] == 1) {
-            ocd_ep2.DX = A + B;
+            ocd_ep2.dx = A + B;
         }
     }
 
     static void sub(int A, int B, int[] flags) {
         if (flags[5] == 1) {
-            ocd_ep2.AX = A - B;
+            ocd_ep2.ax = A - B;
+            if (ocd_ep2.ax == 0) ocd_ep2.ZERO = 1; // flag de soma 0
+            
         }
         if (flags[7] == 1) {
-            ocd_ep2.BX = A - B;
+            ocd_ep2.bx = A - B;
+            if (ocd_ep2.bx == 0) ocd_ep2.ZERO = 1; // flag de soma 0
         }
         if (flags[9] == 1) {
-            ocd_ep2.CX = A - B;
+            ocd_ep2.cx = A - B;
+            if (ocd_ep2.cx == 0) ocd_ep2.ZERO = 1; // flag de soma 0
         }
         if (flags[11] == 1) {
-            ocd_ep2.DX = A - B;
+            ocd_ep2.dx = A - B;
+            if (ocd_ep2.dx == 0) ocd_ep2.ZERO = 1; // flag de soma 0
         }
     }
 
     static void mul(int A, int B, int[] flags) {
         if (flags[5] == 1) {
-            ocd_ep2.AX = A * B;
+            ocd_ep2.ax = A * B;
         }
         if (flags[7] == 1) {
-            ocd_ep2.BX = A * B;
+            ocd_ep2.bx = A * B;
         }
         if (flags[9] == 1) {
-            ocd_ep2.CX = A * B;
+            ocd_ep2.cx = A * B;
         }
         if (flags[11] == 1) {
-            ocd_ep2.DX = A * B;
+            ocd_ep2.dx = A * B;
         }
     }
 
     static void div(int A, int B, int[] flags) {
         if (flags[5] == 1) {
-            ocd_ep2.AX = A / B;
+            ocd_ep2.ax = A / B;
         }
         if (flags[7] == 1) {
-            ocd_ep2.BX = A / B;
+            ocd_ep2.bx = A / B;
         }
         if (flags[9] == 1) {
-            ocd_ep2.CX = A / B;
+            ocd_ep2.cx = A / B;
         }
         if (flags[11] == 1) {
-            ocd_ep2.DX = A / B;
+            ocd_ep2.dx = A / B;
         }
     }
 
     static void cmp(int A, int B, int[] flags) {
-        sub(A, B, flags); //verifica conta passada if==0 entao eh igual
+        sub(A, B, flags); //verifica conta passada if==0 entao eh igual        
     }
 
     static void je(int A) {
-        if(){
+        if (ocd_ep2.ZERO == 1) {
             ocd_ep2.PC = A; // altera linha de PC para o jump
+            ocd_ep2.ZERO = 0;
         }
         
     }
@@ -294,19 +300,19 @@ public class ocd_ep2 {
 
         switch (a) {
             case "0001":
-                reg1 = ocd_ep2.AX;
+                reg1 = ocd_ep2.ax;
                 flags[5] = 1;  //porta de entrada do reg do diagrama - 1
                 break;
             case "0010":
-                reg1 = ocd_ep2.BX;
+                reg1 = ocd_ep2.bx;
                 flags[7] = 1;
                 break;
             case "0011":
-                reg1 = ocd_ep2.CX;
+                reg1 = ocd_ep2.cx;
                 flags[9] = 1;
                 break;
             case "0100":
-                reg1 = ocd_ep2.DX; //portas de DX entram entre a seq do diagrama
+                reg1 = ocd_ep2.dx; //portas de dx entram entre a seq do diagrama
                 flags[11] = 1;
                 break;
             case "0101":
@@ -328,19 +334,19 @@ public class ocd_ep2 {
         } else {
             switch (b) {
                 case "0001":
-                    reg2 = ocd_ep2.AX;
+                    reg2 = ocd_ep2.ax;
                     flags[6] = 1;  //porta de saida do reg do diagrama - 1
                     break;
                 case "0010":
-                    reg2 = ocd_ep2.BX;
+                    reg2 = ocd_ep2.bx;
                     flags[8] = 1;
                     break;
                 case "0011":
-                    reg2 = ocd_ep2.CX;
+                    reg2 = ocd_ep2.cx;
                     flags[10] = 1;
                     break;
                 case "0100":
-                    reg2 = ocd_ep2.DX; 
+                    reg2 = ocd_ep2.dx; 
                     flags[12] = 1;
                     break;
                 case "0101":
@@ -360,6 +366,7 @@ public class ocd_ep2 {
 
         switch (instru) {
             case "0001":
+                // mov();
                 break;            
             case "0010":
                 inc(reg1, flags);
@@ -383,14 +390,19 @@ public class ocd_ep2 {
                 je(reg1);
                 break;
             case "1001":
+                //jne(reg1);
                 break;
             case "1010":
+                // jg(reg1);
                 break;
             case "1011":
+                // jge(reg1);
                 break;
             case "1100":
+                // jl(reg1);
                 break;
             case "1101":
+                // jle(reg1);
                 break;
         }
 
