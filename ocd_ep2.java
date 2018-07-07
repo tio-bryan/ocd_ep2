@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.Iterator;
 
 public class ocd_ep2 {
-    static int AX, BX, CX, DX;
+    static int AX, BX, CX, DX, PC;
 
     // Baseado no http://www.guj.com.br/t/transforma-decimal-em-binario/47061
     public static String DecimalParaBinario(int c2, int length) {
@@ -277,6 +277,10 @@ public class ocd_ep2 {
         sub(A, B, flags); //verifica conta passada if==0 entao eh igual
     }
 
+    static void je(int A) {
+        ocd_ep2.PC = A; // altera linha de PC para o jump
+    }
+
     static void leCodigo(String code, int[] flags) {
         System.out.println(code + " --- " + code.length());
         String instru = code.substring(0,3);
@@ -353,25 +357,38 @@ public class ocd_ep2 {
 
         switch (instru) {
             case "0001":
+                break;            
             case "0010":
                 inc(reg1, flags);
+                break;
             case "0011":
                 add(reg1, reg2, flags);
                 break;
             case "0100":
                 sub(reg1, reg2, flags);
+                break;
             case "0101":
                 mul(reg1, reg2, flags);
+                break;
             case "0110":
                 div(reg1, reg2, flags);
+                break;
             case "0111":
                 cmp(reg1, reg2, flags);
+                break;
             case "1000":
+                je(reg1);
+                break;
             case "1001":
+                break;
             case "1010":
+                break;
             case "1011":
+                break;
             case "1100":
+                break;
             case "1101":
+                break;
         }
     }
 
@@ -379,9 +396,9 @@ public class ocd_ep2 {
         Iterator it = lista.iterator();
 
         while (it.hasNext()) {
-            M MAR = lista.get(PC);
-            if (MAR.endereco == PC) {
-                PC++;
+            M MAR = lista.get(ocd_ep2.PC);
+            if (MAR.endereco == ocd_ep2.PC) {
+                ocd_ep2.PC++;
                 return MAR.opCode;
             }
         }
@@ -396,12 +413,13 @@ public class ocd_ep2 {
     public static void main(String[] args) throws IOException {
         List<M> fila = new LinkedList<M>(); // lista ligada com o binario e endereco
         int[] flags = new int[24]; // barramento 
+        ocd_ep2.PC = 0;
 
         if (args[0] != null) {
             compilaCode(new FileReader(args[0]), fila);
         }
 
-        leCodigo(busca(fila, 0), flags);
+        leCodigo(busca(fila, ocd_ep2.PC), flags);
 
     }
 }
