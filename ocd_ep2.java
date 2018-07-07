@@ -396,16 +396,24 @@ public class ocd_ep2 {
 
     static void busca(List<M> lista, int PC, int[] flags) {
 
-        Iterator it = fila.iterator();
+        // Iterator it = lista.iterator();
 
-        while (it.hasNext()) {
-            M MAR = lista.get(ocd_ep2.PC);
-            if (MAR.endereco == ocd_ep2.PC) {
+        // while (it.hasNext()) {
+        //     M MAR = lista.get(ocd_ep2.PC);
+        //     if (MAR.endereco == ocd_ep2.PC) {
+        //         ocd_ep2.PC++;
+        //         leCodigo(MAR.opCode, flags, lista) ;
+        //     }
+        // }
+
+        // M MAR = lista.get(ocd_ep2.PC);
+
+        for (M elemento : lista) {
+            if (elemento.endereco == ocd_ep2.PC) {
                 ocd_ep2.PC++;
-                leCodigo(MAR.opCode, flags, lista, it) ;
+                leCodigo(elemento.opCode, flags, lista) ;
             }
         }
-
         
     }
     static void registradores() { // Printa os registradores apos ciclo
