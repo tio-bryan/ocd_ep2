@@ -281,7 +281,7 @@ public class ocd_ep2 {
         ocd_ep2.PC = A; // altera linha de PC para o jump
     }
 
-    static void leCodigo(String code, int[] flags) {
+    static void leCodigo(String code, int[] flags, List<M> fila, Iterator it) {
         System.out.println(code + " --- " + code.length());
         String instru = code.substring(0,3);
         String a = code.substring(4,7);
@@ -390,20 +390,21 @@ public class ocd_ep2 {
             case "1101":
                 break;
         }
+
+        busca(fila, ocd_ep2.PC, flags, it);
     }
 
-    static String busca(List<M> lista, int PC) {
-        Iterator it = lista.iterator();
+    static void busca(List<M> lista, int PC, int[] flags, Iterator it) {
 
         while (it.hasNext()) {
             M MAR = lista.get(ocd_ep2.PC);
             if (MAR.endereco == ocd_ep2.PC) {
                 ocd_ep2.PC++;
-                return MAR.opCode;
+                leCodigo(MAR.opCode, flags, lista, it) ;
             }
         }
 
-        return "-1";
+        
     }
     static void registradores() { // Printa os registradores apos ciclo
 
@@ -411,15 +412,15 @@ public class ocd_ep2 {
 
 
     public static void main(String[] args) throws IOException {
-        List<M> fila = new LinkedList<M>(); // lista ligada com o binario e endereco
         int[] flags = new int[24]; // barramento 
         ocd_ep2.PC = 0;
+        List<M> fila = new LinkedList<M>(); // lista ligada com o binario e endereco
+        Iterator it = fila.iterator();
 
-        if (args[0] != null) {
-            compilaCode(new FileReader(args[0]), fila);
-        }
+        if (args[0] != null) compilaCode(new FileReader(args[0]), fila);
 
-        leCodigo(busca(fila, ocd_ep2.PC), flags);
+        //leCodigo(busca(fila, ocd_ep2.PC, flags), flags, fila);
+        busca(fila, ocd_ep2.PC, flags, it);
 
     }
 }
