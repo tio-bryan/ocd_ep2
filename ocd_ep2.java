@@ -7,7 +7,7 @@ public class ocd_ep2 {
     static int AX, BX, CX, DX;
 
     // Baseado no http://www.guj.com.br/t/transforma-decimal-em-binario/47061
-    public static String DecimalParaBinario(int c2) {
+    public static String DecimalParaBinario(int c2, int length) {
 
         int d = c2;
         StringBuffer binario = new StringBuffer(); // guarda os dados
@@ -18,10 +18,10 @@ public class ocd_ep2 {
             d = d >> 1; // é a divisão que você deseja
         }
 
-        int length = 8 - binario.length();
+        int length1 = length - binario.length();
         
-        for (int i = 0; i < length; i++) {
-            if (length - i == 1) {
+        for (int i = 0; i < length1; i++) {
+            if (length1 - i == 1) {
                 binario.append(1);
                 break;
             }
@@ -47,6 +47,7 @@ public class ocd_ep2 {
         BufferedReader leitor = new BufferedReader(read);
         String line;
         int enderecoMEM = 0;// endereco do comando
+        int length = 0;
 
         String instrucao = "";
         String c1 = "";
@@ -135,7 +136,8 @@ public class ocd_ep2 {
                 }
 
                 try {
-                    instrucao_bin += DecimalParaBinario(Integer.parseInt(c2)); // caso o resto da instrucao seja um int
+                    length = 8;
+                    instrucao_bin += DecimalParaBinario(Integer.parseInt(c2), length); // caso o resto da instrucao seja um int
                 }
                 catch (Exception e) { // caso seja um registrador
                     switch (c2) {
@@ -169,7 +171,8 @@ public class ocd_ep2 {
             } else {
                 c1 = parts[1];
                 try {
-                    instrucao_bin += DecimalParaBinario(Integer.parseInt(c1)); // caso o resto da instrucao seja um int
+                    length = 12;
+                    instrucao_bin += DecimalParaBinario(Integer.parseInt(c1), length); // caso o resto da instrucao seja um int
                 } catch (Exception e) { // caso seja um registrador
                     switch (c1) {
                         case "AX":
@@ -275,7 +278,7 @@ public class ocd_ep2 {
     }
 
     static void leCodigo(String code, int[] flags) {
-        
+        System.out.println(code + " --- " + code.length());
         String instru = code.substring(0,3);
         String a = code.substring(4,7);
         String b = code.substring(9,15);
