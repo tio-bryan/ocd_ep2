@@ -474,7 +474,7 @@ public class ocd_ep2 {
     }
     static void estado() { // Printa os registradores apos ciclo
         System.out.println("IR: " + (ocd_ep2.PC - 1));
-        System.out.println("Registradores: ax = " + ax + " bx = " + bx + " cx= " + cx + " dx= " + dx);
+        System.out.println("Registradores: ax = " + ax + " bx = " + bx + " cx = " + cx + " dx = " + dx);
         System.out.println("Flags: " + " ZF = " + ZF + " " + " OF = " + OF + " SF = " + SF );
         System.out.println("--------------------------------------------------\n");
     }
